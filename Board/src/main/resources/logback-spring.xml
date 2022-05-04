@@ -17,6 +17,7 @@
 	<!-- Logger -->
 	<!-- 로그를 출력할 요소로 level 속성을 통해 출력할 로그의 레벨을 조절하여 appender에 전달 -->
 	<logger name="com.board" level="DEBUG" appender-ref="console" />
+	<!-- 로그를 출력하는 요소로 level속성을 통해 출력할 로그의 레벨을 조절하여 appender로 전달한다 name은 경로를 의미 -->
 	<logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog" />
 	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
 

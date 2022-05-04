@@ -48,4 +48,12 @@ public class Board {
 		this.deleteYn = deleteYn;
 	}
 	
+	// 게시글 수정
+	public void update(String title, String content, String writer) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.modifiedDate = LocalDateTime.now();
+	}
+	
 }
