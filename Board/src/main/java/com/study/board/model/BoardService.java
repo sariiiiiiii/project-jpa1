@@ -38,7 +38,7 @@ public class BoardService {
 		// Entity클래스는 절대로 요청(request)에 사용되어서는 안되기 때문에 BoardRequestDto.toEntity() 메소드를 이용해서 boardRepository.save() 메소드 실행
 		// save() 메소드가 실행된 후 entity객체에는 생성된 게시글 정보가 담기며, 
 		
-		return entity.getId(); // 메소드가 종료되면 생성된 게시글의 id(PK)가 리턴된다
+		return entity.getId(); // 메소드가 종료되면 생성된 게시글의 id(PK)가 리턴된다 (커멘더와 쿼리를 분리)
 	}
 	
 	
@@ -64,6 +64,7 @@ public class BoardService {
 	public Long update(Long id, BoardRequestDto params) {
 		
 		Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		// orElseThrow() https://velog.io/@mumu/Java-Optional-orElse-orElseGet-orElseThrow
 		
 		entity.update(params.getTitle(), params.getContent(), params.getWriter());
 		// entity 클래스에 update 메소드는 update 쿼리를 실행하는 로직이 없다
@@ -71,6 +72,33 @@ public class BoardService {
 		// JPA에는 영속성 컨텍스트라는 개념이 있다
 		
 		return id;
+	}
+	
+	
+	/*
+	 * 게시글 삭제
+	 */
+	@Transactional
+	public Long delete(final Long id) {
+		
+		Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		
+		entity.delete();
+		
+		return id;
+	}
+	
+	/*
+	 * 게시물 상세 조회
+	 */
+	public BoardResponseDto findById(final Long id) {
+		
+		Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		
+		entity.increaseHits();
+		
+		return new BoardResponseDto(entity);
+		
 	}
 	
 

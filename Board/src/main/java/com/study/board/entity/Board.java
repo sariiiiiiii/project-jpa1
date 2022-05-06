@@ -56,4 +56,16 @@ public class Board {
 		this.modifiedDate = LocalDateTime.now();
 	}
 	
+	// 조회 수 증가
+	public void increaseHits() {
+		this.hits++;
+	}
+	
+	// 게시물 삭제
+	public void delete() {
+		this.deleteYn = 'Y';
+	}
+	
+	
+	
 }

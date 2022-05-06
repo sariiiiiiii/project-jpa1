@@ -2,6 +2,7 @@ package com.study.board.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class BoardController {
+public class BoardApiController {
 	
 	private final BoardService boardService;
+	
 	
 	/*
 	 * 게시글 생성
@@ -49,10 +51,27 @@ public class BoardController {
 	 * 게시글 수정
 	 */
 	@PatchMapping("/boards/{id}")
-	public Long save(@PathVariable final Long id, @RequestBody BoardRequestDto params) {
+	public Long save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {
 		
 		return boardService.update(id, params);
 		
+	}
+	
+	/*
+	 * 게시글 삭제
+	 */
+	@DeleteMapping("/board/{id}")
+	public Long delete(@PathVariable final Long id) {
+		return boardService.delete(id);
+	}
+	
+	
+	/*
+	 * 게시글 상세정보 조회
+	 */
+	@GetMapping("/board/{id}")
+	public BoardResponseDto findById(@PathVariable final Long id) {
+		return boardService.findById(id);
 	}
 
 }
